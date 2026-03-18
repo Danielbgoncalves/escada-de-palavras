@@ -101,3 +101,8 @@ header h1 {
     outline: none;
     border-color: var(--border-focus);
 }
+
+.attempt-row.error .letter-input{
+    border: 2px solid #e74c3c; 
+    background-color: #ffe6e6;
+}

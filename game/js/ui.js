@@ -37,7 +37,7 @@ export function setupInputRow(inputRow){
             // enter
             if(e.key === 'Enter'){
                 const word = Array.from(inputs).map(input => input.value).join('').toUpperCase();
-                                
+
                 const event = new CustomEvent('attemptSubmitted', {detail: {word, parentRow}})
                 document.dispatchEvent(event);
             }
@@ -76,13 +76,3 @@ export function updateFixedWord(selector, word){
 
 }
 
-// export function updateFirstAttempRow(wordsLength){
-//     const container = document.querySelector('.attempt-row');
-    
-//     for(let i=0; i<wordsLength; i++){
-//         const inputBox = document.createElement('input');
-//         inputBox.type="text";
-//         inputBox.maxlength="1";
-//         inputBox.class="letter-input";
-//     }
-// }

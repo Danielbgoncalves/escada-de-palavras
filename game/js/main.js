@@ -27,8 +27,14 @@ document.addEventListener('DOMContentLoaded', ()=> {
 document.addEventListener('attemptSubmitted', e => {
     const {word, parentRow} = e.detail;
 
-    console.log(`Passo word = ${word} na main`)
     const result = validateWord(word)
+
+    if(!result.isValid){
+        // A ser criada no ui.js e fazer ficar vermelho os inputs
+        // css iniciado
+        handleError(result.error, parentRow)
+        return;
+    }
 
     if(result.gameWin){
         console.log("UAU")

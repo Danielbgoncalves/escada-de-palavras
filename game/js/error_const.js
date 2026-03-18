@@ -1,0 +1,4 @@
+export const ERRORS = {
+    INVALID_WORD: 'INVALID_WORD',
+    NOT_COMPLETE: 'NOT_COMPLETE'
+};

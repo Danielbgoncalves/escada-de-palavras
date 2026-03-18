@@ -1,7 +1,6 @@
 import {dicionarioPermitido} from '../data/dicionario_5letras.js';
 import { gameState } from './state.js';
-
-const wordsList = Array.from(dicionarioPermitido)
+import { ERRORS } from './error_const.js';
 
 let previousWord = null;
 
@@ -15,13 +14,13 @@ export function validateWord(newWord){
     if(newWord.length !== finalWord.length){ 
         return {isValid: false, 
                 gameWin: false,
-                message: 'A palavra ainda não está completa'}
+                error: ERRORS.NOT_COMPLETE}
     }
 
     if (!dicionarioPermitido.has(newWord)) {
         return {isValid: false, 
                 gameWin: false,
-                message: 'A palavra não é válida'}
+                error: ERRORS.INVALID_WORD}
     }
 
     let differences = countDiff(newWord, previousWord);
