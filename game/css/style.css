@@ -1,0 +1,103 @@
+/* Variáveis para facilitar a troca de cores depois */
+:root {
+    --bg-color: #1b1f1c;
+    --text-color: #ffffff;
+    --border-color: #3a3a3c;
+    --border-focus: #818384;
+    --fixed-word-bg: #538d4e;
+}
+
+/* Reset básico de margens e configuração da fonte */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza tudo horizontalmente */
+    min-height: 100vh;
+    /*padding-top: 50px;*/
+}
+
+/* header {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 100%;
+} */
+
+header {
+    width: 100%; /* Faz o cabeçalho ocupar 100% da largura da tela */
+    display: flex;
+    justify-content: center; /* Centraliza o texto horizontalmente */
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+    padding: 15px 0; /* Dá um respiro em cima e embaixo do texto */
+    border-bottom: 1px solid var(--border-color); /* Cria aquela linha fina e elegante separando o topo do jogo */
+    margin-bottom: 50px; /* Empurra o tabuleiro do jogo lá para baixo */
+}
+
+header h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 4px; /* Dá um espaço estiloso entre as letras */
+    margin: 0;
+}
+
+/* Container principal do jogo */
+.game-board {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaço entre as linhas de palavras */
+}
+
+/* Estilo para as palavras fixas (Inicial e Final) */
+.word-block {
+    display: flex;
+    gap: 8px; /* Espaço entre as letras */
+    justify-content: center;
+}
+
+.word-block span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: var(--fixed-word-bg);
+    border-radius: 4px;
+}
+
+/* Estilo para a linha onde o jogador vai digitar */
+.attempt-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.letter-input {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+}
+
+/* Quando o usuário clica na caixinha para digitar */
+.letter-input:focus {
+    outline: none;
+    border-color: var(--border-focus);
+}
