@@ -4,7 +4,7 @@ Fará o import dos outros serviços e gerenciará qual usar
 
 */
 
-import {setupInputRow, createNewAttemptRow, updateFixedWord, handleError} from './ui.js';
+import {setupInputRow, createNewAttemptRow, updateFixedWord, handleVisualError, handleVisualVictory} from './ui.js';
 import {validateWord} from './game.js';
 import {sortearDesafioValido} from './bfs.js';
 import {gameState, setChallenge } from './state.js';
@@ -30,9 +30,12 @@ document.addEventListener('attemptSubmitted', e => {
     const result = validateWord(word)
 
     if(!result.isValid){
-        // A ser criada no ui.js e fazer ficar vermelho os inputs
-        // css iniciado
-        handleError(result.error, parentRow)
+        handleVisualError(result.error, parentRow)
+        return;
+    }
+
+    if(result.gameWin){
+        handleVisualVictory(parentRow);
         return;
     }
 

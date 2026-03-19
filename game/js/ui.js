@@ -1,3 +1,6 @@
+import { gameState } from "./state.js";
+
+const wordLength = gameState.wordLengthlength;
 
 export function setupInputRow(inputRow){
     const inputs = inputRow.querySelectorAll('.letter-input');
@@ -76,15 +79,29 @@ export function updateFixedWord(selector, word){
 
 }
 
-export function handleError(errorType, row){
+export function handleVisualError(errorType, row){
     row.classList.add('error');
-    row.classList.add('shake');
+    row.classList.add('error-shake');
 
     setTimeout(() => {
-        row.classList.remove('shake');
+        row.classList.remove('error-shake');
         row.classList.remove('error');
 
     }, 300);
 
     return;
+}
+
+export function handleVisualVictory(row){
+    row.classList.add('victory');
+    const inputs = row.querySelectorAll('.letter-input');
+
+    inputs.forEach((input, index) => {
+        setTimeout(() => {
+            input.classList.remove('victory-shake');
+            void input.offsetWidth; // força reflow
+            input.classList.add('victory-shake');
+        }, 200*index);
+    });
+
 }
