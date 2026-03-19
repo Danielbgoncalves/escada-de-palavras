@@ -4,7 +4,7 @@ Fará o import dos outros serviços e gerenciará qual usar
 
 */
 
-import {setupInputRow, createNewAttemptRow, updateFixedWord} from './ui.js';
+import {setupInputRow, createNewAttemptRow, updateFixedWord, handleError} from './ui.js';
 import {validateWord} from './game.js';
 import {sortearDesafioValido} from './bfs.js';
 import {gameState, setChallenge } from './state.js';

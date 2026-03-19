@@ -102,7 +102,21 @@ header h1 {
     border-color: var(--border-focus);
 }
 
+/*Quando der erro no input*/
 .attempt-row.error .letter-input{
     border: 2px solid #e74c3c; 
     background-color: #ffe6e6;
+}
+
+@keyframes shake{
+    0%  { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(0); }
+    80% { transform: translateX(-5px); }
+    100%{ transform: translateX(5px); }
+}
+
+.attempt-row.shake{
+    animation: shake 0.3s;
 }

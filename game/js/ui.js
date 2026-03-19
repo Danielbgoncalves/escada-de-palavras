@@ -76,3 +76,15 @@ export function updateFixedWord(selector, word){
 
 }
 
+export function handleError(errorType, row){
+    row.classList.add('error');
+    row.classList.add('shake');
+
+    setTimeout(() => {
+        row.classList.remove('shake');
+        row.classList.remove('error');
+
+    }, 300);
+
+    return;
+}
