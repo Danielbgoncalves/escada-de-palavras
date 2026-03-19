@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', ()=> {
 })
 
 document.addEventListener('attemptSubmitted', e => {
+    if(gameState.isGameOver) return;
+
     const {word, parentRow} = e.detail;
 
     const result = validateWord(word)
@@ -35,19 +37,21 @@ document.addEventListener('attemptSubmitted', e => {
     }
 
     if(result.gameWin){
+        gameState.isGameOver = true;
+
+        const inputs = document.querySelectorAll('.letter-inputs');
+        inputs.forEach(input => input.disable=true);
+
         handleVisualVictory(parentRow);
         return;
     }
+    
+    if (result.isValid){
+        const inputs = parentRow.querySelectorAll('.letter-input');
+        inputs.forEach(input => input.disabled = true);
 
-    if(result.gameWin){
-        console.log("UAU")
-    }   
-    else if (result.isValid){
         const board = document.querySelector('.game-board');
-        createNewAttemptRow(board, gameState.wordLength)
-    }
-    else if (!result.isValid){
-        console.log(result.message)
+        createNewAttemptRow(board, gameState.wordLength);
     }
 
 });

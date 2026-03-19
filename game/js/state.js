@@ -4,6 +4,7 @@ export const gameState = {
     path: [],
     idealDistance: 0,
     attempts: 0,
+    isGameOver: false,
 
     get wordLength(){
         return this.initialWord.length;
