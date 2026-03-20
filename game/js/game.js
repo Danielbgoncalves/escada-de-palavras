@@ -50,3 +50,39 @@ function countDiff(newWord, previousWord){
 
     return differences
 }
+
+export function calculateScore(){
+    const base = 100;
+    
+    const idealDistance = gameState.idealDistance;
+
+    const extraAttempts = gameState.attempts - idealDistance;
+    const extraPathLength = gameState.pathLength - idealDistance;
+    const timeEndGame = Date.now();
+
+
+    const penaltyAttemps =  extraAttempts * 2;
+    const penaltyInefficiency = extraPathLength * 2;
+    const penaltyRestarts = gameState.restarts * 15;
+    const penaltyTime = penaltyTimes(gameState.startTime, timeEndGame);
+
+    return base - penaltyAttemps - penaltyInefficiency - penaltyRestarts - penaltyTime;
+}
+
+
+function penaltyTimes(start, end){
+    const gapInSec = (start - end) * 1000;
+    let penalty = 0;
+
+    if(gapInSec < 40){
+        penalty = 0;
+    } else if (gapInSec < 80){
+        penalty = 10;
+    } else if (gapInSec < 160){
+        penalty = 20;
+    } else {
+        penalty = 30;
+    }
+
+    return penalty;
+}

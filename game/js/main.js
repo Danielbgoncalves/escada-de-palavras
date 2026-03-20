@@ -5,7 +5,7 @@ Fará o import dos outros serviços e gerenciará qual usar
 */
 
 import {setupInputRow, createNewAttemptRow, updateFixedWord, handleVisualError, handleVisualVictory} from './ui.js';
-import {validateWord} from './game.js';
+import {validateWord, calculateScore} from './game.js';
 import {sortearDesafioValido} from './bfs.js';
 import {gameState, setChallenge } from './state.js';
 
@@ -29,24 +29,33 @@ document.addEventListener('attemptSubmitted', e => {
 
     const {word, parentRow} = e.detail;
 
-    const result = validateWord(word)
+    const result = validateWord(word);
+    const isValid = result.isValid;
 
-    if(!result.isValid){
+
+    gameState.registerAttempt({word, isValid});
+
+    if(!isValid){
         handleVisualError(result.error, parentRow)
         return;
     }
-
+    
     if(result.gameWin){
         gameState.isGameOver = true;
 
-        const inputs = document.querySelectorAll('.letter-inputs');
-        inputs.forEach(input => input.disable=true);
+        const inputs = parentRow.querySelectorAll('.letter-input');
+        inputs.forEach(input => input.disabled=true);
 
         handleVisualVictory(parentRow);
+
+        const score = calculateScore();
+        console.log(score);
+
         return;
     }
     
-    if (result.isValid){
+    if (isValid){
+
         const inputs = parentRow.querySelectorAll('.letter-input');
         inputs.forEach(input => input.disabled = true);
 
@@ -54,4 +63,7 @@ document.addEventListener('attemptSubmitted', e => {
         createNewAttemptRow(board, gameState.wordLength);
     }
 
+
+
+    
 });
