@@ -4,47 +4,56 @@ Fará o import dos outros serviços e gerenciará qual usar
 
 */
 
-import {setupInputRow, createNewAttemptRow, updateFixedWord, handleVisualError, handleVisualVictory} from './ui.js';
-import {validateWord, calculateScore} from './game.js';
-import {sortearDesafioValido} from './bfs.js';
-import {gameState, setChallenge } from './state.js';
+import { setupInputRow, createNewAttemptRow, updateFixedWord, handleVisualError, handleVisualVictory } from './ui.js';
+import { validateWord, calculateScore } from './game.js';
+import { getChallengeFromServer } from './client.js';
+import { gameState, setChallenge } from './state.js';
 
-document.addEventListener('DOMContentLoaded', ()=> {
-    const challenge = sortearDesafioValido();
+document.addEventListener('DOMContentLoaded', async () => {
 
-    setChallenge(challenge);
+    try {
+        const challenge = await getChallengeFromServer();
 
-    updateFixedWord('.start-word', challenge.initialWord);
-    updateFixedWord('.target-word', challenge.finalWord);
+        setChallenge(challenge);
+        console.log(challenge)
 
-    const board = document.querySelector('.game-board');
-    createNewAttemptRow(board, gameState.wordLength);
+        updateFixedWord('.start-word', challenge.initialWord);
+        updateFixedWord('.target-word', challenge.finalWord);
 
-    const firstRow = document.querySelector('.attempt-row');
-    if(firstRow) setupInputRow(firstRow);
+        const board = document.querySelector('.game-board');
+        createNewAttemptRow(board, gameState.wordLength);
+
+        const firstRow = document.querySelector('.attempt-row');
+        if (firstRow) setupInputRow(firstRow);
+
+    } catch (error){
+        console.error("Erro ao buscar o desafio do dia:", error)
+        alert("Não foi possível carregar o desfio de hoje. Tente novamente mais tarde.")
+    }
+    
 })
 
 document.addEventListener('attemptSubmitted', e => {
-    if(gameState.isGameOver) return;
+    if (gameState.isGameOver) return;
 
-    const {word, parentRow} = e.detail;
+    const { word, parentRow } = e.detail;
 
     const result = validateWord(word);
     const isValid = result.isValid;
 
 
-    gameState.registerAttempt({word, isValid});
+    gameState.registerAttempt({ word, isValid });
 
-    if(!isValid){
+    if (!isValid) {
         handleVisualError(result.error, parentRow)
         return;
     }
-    
-    if(result.gameWin){
+
+    if (result.gameWin) {
         gameState.isGameOver = true;
 
         const inputs = parentRow.querySelectorAll('.letter-input');
-        inputs.forEach(input => input.disabled=true);
+        inputs.forEach(input => input.disabled = true);
 
         handleVisualVictory(parentRow);
 
@@ -53,8 +62,8 @@ document.addEventListener('attemptSubmitted', e => {
 
         return;
     }
-    
-    if (isValid){
+
+    if (isValid) {
 
         const inputs = parentRow.querySelectorAll('.letter-input');
         inputs.forEach(input => input.disabled = true);
@@ -64,6 +73,4 @@ document.addEventListener('attemptSubmitted', e => {
     }
 
 
-
-    
 });
