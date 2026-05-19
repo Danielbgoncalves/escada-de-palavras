@@ -10,8 +10,8 @@ export const gameState = {
     },
 
     // progresso do jogador
-    attempts: 0.0,
-    restarts: 0.0,
+    attempts: 1,
+    restarts: 1,
     startTime: null,
 
     registerAttempt(att){
