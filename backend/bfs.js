@@ -1,17 +1,17 @@
-import {dicionarioPermitido} from '../data/dicionario_5letras.js';
+import { dicionarioPermitido } from './data/dicionario_5letras.js';
 
-function encontraVizinhos(palavra){
+function encontraVizinhos(palavra) {
     let vizinhos = [];
 
     const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-    for(let i=0; i < palavra.length; i++){
-        for(let letra of letras){
-            if(palavra[i] === letra) continue;
+    for (let i = 0; i < palavra.length; i++) {
+        for (let letra of letras) {
+            if (palavra[i] === letra) continue;
 
-            const novaPalavra = palavra.substring(0, i) + letra + palavra.substring(i+1);
+            const novaPalavra = palavra.substring(0, i) + letra + palavra.substring(i + 1);
 
-            if(dicionarioPermitido.has(novaPalavra)){
+            if (dicionarioPermitido.has(novaPalavra)) {
                 vizinhos.push(novaPalavra);
             }
         }
@@ -20,7 +20,7 @@ function encontraVizinhos(palavra){
     return vizinhos;
 }
 
-function encontrarCaminhoCurto(palavraInicial, palavraFinal){
+function encontrarCaminhoCurto(palavraInicial, palavraFinal) {
     if (palavraInicial === palavraFinal)
         return [palavraInicial];
 
@@ -28,22 +28,22 @@ function encontrarCaminhoCurto(palavraInicial, palavraFinal){
     const visitados = new Set([palavraInicial]);
     const fila = [palavraInicial];
 
-    while(fila.length > 0){
+    while (fila.length > 0) {
         const palavraAtual = fila.shift();
 
-        if(palavraAtual === palavraFinal){
+        if (palavraAtual === palavraFinal) {
             const caminho = [];
             let temp = palavraFinal;
-            
-            while(temp){
+
+            while (temp) {
                 caminho.push(temp);
                 temp = pai[temp];
-            }        
+            }
             return caminho.reverse();
         }
 
-        for(const visinho of encontraVizinhos(palavraAtual)){
-            if(!visitados.has(visinho)){
+        for (const visinho of encontraVizinhos(palavraAtual)) {
+            if (!visitados.has(visinho)) {
                 visitados.add(visinho);
                 pai[visinho] = palavraAtual;
                 fila.push(visinho);
@@ -58,22 +58,24 @@ function encontrarCaminhoCurto(palavraInicial, palavraFinal){
 // console.log(caminho);
 
 
-export function sortearDesafioValido(){
+export function sortearDesafioValido() {
     let initial, final, caminho;
     const palavras = Array.from(dicionarioPermitido);
     const numPalavras = palavras.length;
 
-    do{
+    do {
         initial = palavras[Math.floor(Math.random() * numPalavras)]
         final = palavras[Math.floor(Math.random() * numPalavras)]
         caminho = encontrarCaminhoCurto(initial, final);
-    }while(!caminho || caminho.length < 4 || caminho.length > 7 )
-    
-    const challenge = { initialWord: initial, 
-                        finalWord: final,
-                        path: caminho,
-                        idealDistance: caminho.length -1};
-    
+    } while (!caminho || caminho.length < 2 || caminho.length > 5)
+
+    const challenge = {
+        initialWord: initial,
+        finalWord: final,
+        path: caminho,
+        idealDistance: caminho.length - 1
+    };
+
     console.log(challenge);
 
     return challenge;
