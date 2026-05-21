@@ -6,7 +6,7 @@ Fará o import dos outros serviços e gerenciará qual usar
 
 import { setupInputRow, createNewAttemptRow, updateFixedWord, handleVisualError, handleVisualVictory } from './ui.js';
 import { validateWord, calculateScore } from './game.js';
-import { getChallengeFromServer } from './client.js';
+import { getChallengeFromServer, sendMetricsToDB } from './client.js';
 import { gameState, setChallenge } from './state.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
 })
 
-document.addEventListener('attemptSubmitted', e => {
+document.addEventListener('attemptSubmitted', async e => {
     if (gameState.isGameOver) return;
 
     const { word, parentRow } = e.detail;
@@ -58,6 +58,9 @@ document.addEventListener('attemptSubmitted', e => {
         handleVisualVictory(parentRow);
 
         const score = calculateScore();
+
+        const sucess = await sendMetricsToDB(score, gameState);
+
         console.log(score);
 
         return;

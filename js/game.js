@@ -80,7 +80,10 @@ export function calculateScore() {
 }
 
 function penaltyTimes(start, end) {
-    const gapInSec = (start - end) * 1000;
+    const gapInSec = Math.floor((end - start) / 1000);
+    
+    gameState.spentTime = gapInSec;
+    console.log("tempo gasto: ", gameState.spentTime)
     let penalty = 0;
 
     if (gapInSec < 40) {
