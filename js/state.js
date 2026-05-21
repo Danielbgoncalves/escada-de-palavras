@@ -1,7 +1,9 @@
 export const gameState = {
     initialWord: "",
     finalWord: "",
-    path: [],
+    userPath: [],
+    solutionPath: [],
+
     idealDistance: 0.0,
     isGameOver: false,
 
@@ -13,18 +15,20 @@ export const gameState = {
     attempts: 1,
     restarts: 1,
     startTime: null,
+    spentTime: 0.0,
+
 
     registerAttempt(att){
         const word = att.word;
         const isValid = att.isValid;
 
-        if(isValid) this.path.push(word);
+        if(isValid) this.userPath.push(word);
 
         this.attempts++;
     },
 
     get pathLength(){
-        return this.path.length;
+        return this.userPath.length;
     }
 
 }
@@ -32,8 +36,9 @@ export const gameState = {
 export function setChallenge(challenge){
     gameState.initialWord = challenge.initialWord;
     gameState.finalWord = challenge.finalWord;
-    gameState.path = challenge.path;
+    gameState.solutionPath = challenge.solutionPath;
     gameState.idealDistance = challenge.idealDistance;
+    gameState.challengeID = challenge.challengeID;
     gameState.attempts = 0;
     gameState.startTime = Date.now()
 }
