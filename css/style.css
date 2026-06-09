@@ -1,6 +1,7 @@
 /* Variáveis para facilitar a troca de cores depois */
 :root {
     --bg-color: #1b1f1c;
+    --title-color: #d69e6f;
     --text-color: #ffffff;
     --border-color: #3a3a3c;
     --border-focus: #818384;
@@ -20,7 +21,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg-color);
-    color: var(--text-color);
+    color: var(--title-color);
     display: flex;
     flex-direction: column;
     align-items: center; /* Centraliza tudo horizontalmente */
@@ -75,6 +76,7 @@ header h1 {
     font-size: 2rem;
     font-weight: bold;
     text-transform: uppercase;
+    color: var(--text-color);
     background-color: var(--fixed-word-bg);
     border-radius: 5px;
 }
