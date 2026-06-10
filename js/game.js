@@ -4,6 +4,10 @@ import { ERRORS } from './error_const.js';
 
 let previousWord = null;
 
+export function setPreviousWord(word){
+    previousWord = word;
+}
+
 export function validateWord(newWord) {
     const finalWord = gameState.finalWord;
 
@@ -98,3 +102,4 @@ function penaltyTimes(start, end) {
 
     return penalty;
 }
+

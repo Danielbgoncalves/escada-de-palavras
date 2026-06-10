@@ -16,6 +16,7 @@ export const gameState = {
     restarts: 1,
     startTime: null,
     spentTime: 0.0,
+    hintsUsed: 0,
 
 
     registerAttempt(att){
@@ -36,9 +37,13 @@ export const gameState = {
 export function setChallenge(challenge){
     gameState.initialWord = challenge.initialWord;
     gameState.finalWord = challenge.finalWord;
-    gameState.solutionPath = challenge.solutionPath;
+    gameState.solutionPath = typeof challenge.solutionPath === 'string' 
+        ? JSON.parse(challenge.solutionPath) 
+        : challenge.solutionPath;
+    console.log(`solutionpath eh: ${gameState.solutionPath}`)
     gameState.idealDistance = challenge.idealDistance;
     gameState.challengeID = challenge.challengeID;
     gameState.attempts = 0;
+    gameState.hintsUsed = 0;
     gameState.startTime = Date.now()
 }

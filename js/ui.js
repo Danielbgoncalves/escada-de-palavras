@@ -105,3 +105,31 @@ export function handleVisualVictory(row) {
     });
 
 }
+
+export function renderBoardWithHints(solutionPath, hintsUsed){
+    const board = document.querySelector('.game-board');
+    const targetWordDiv = document.querySelector('.target-word');
+
+    const allAttempts = document.querySelectorAll('.attempt-row');
+    allAttempts.forEach(row => row.remove());
+
+    for(let i=0; i < hintsUsed; i++){
+        const hintWord = solutionPath[i];
+
+        const hintRow = document.createElement('div')
+        hintRow.classList.add('attempt-row', 'hint-row');
+
+        [...hintWord].forEach(letter => {
+            const input = document.createElement('input');
+            input.maxLength = 1;
+            input.type = 'text';
+            input.classList.add('letter-input');
+            input.value = letter;
+            input.disabled = true;
+            hintRow.appendChild(input);
+        });
+
+        board.insertBefore(hintRow, targetWordDiv);
+
+    }
+}

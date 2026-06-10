@@ -4,8 +4,8 @@ Fará o import dos outros serviços e gerenciará qual usar
 
 */
 
-import { setupInputRow, createNewAttemptRow, updateFixedWord, handleVisualError, handleVisualVictory } from './ui.js';
-import { validateWord, calculateScore } from './game.js';
+import { setupInputRow, createNewAttemptRow, updateFixedWord, handleVisualError, handleVisualVictory, renderBoardWithHints } from './ui.js';
+import { validateWord, calculateScore, setPreviousWord } from './game.js';
 import { getChallengeFromServer, sendMetricsToDB } from './client.js';
 import { gameState, setChallenge } from './state.js';
 
@@ -32,6 +32,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+    const hintBtn = document.querySelector('#hint-btn');
+
+    if(!hintBtn || gameState.isGameOver ) return;
+
+    hintBtn.addEventListener('click', () => {
+        if(gameState.hintsUsed >= gameState.solutionPath.length - 2){
+            console.log("Sem mais dicas!")
+            hintBtn.disabled = true;
+            return;
+        }
+
+        gameState.hintsUsed++;
+        const hintWord = gameState.solutionPath[gameState.hintsUsed];
+
+        gameState.userPath = gameState.solutionPath.slice(
+            1, gameState.hintsUsed+1 );
+        setPreviousWord(hintWord);
+
+        renderBoardWithHints(gameState.solutionPath, gameState.hintsUsed);
+
+        const board = document.querySelector('.game-board');
+        createNewAttemptRow(board, gameState.wordLength);
+    });
+});
 
 document.addEventListener('attemptSubmitted', async e => {
     if (gameState.isGameOver) return;
