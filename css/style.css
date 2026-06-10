@@ -6,9 +6,12 @@
     --border-color: #3a3a3c;
     --border-focus: #818384;
     --fixed-word-bg: #538d4e;
-    --border-box-error: #e74c3c; 
+    --border-box-error: #e74c3c;
     --background-color-error: #ffe6e6;
     --background-color-victory: #a8f3bf;
+
+    --bg-action-btn: #3498db;
+
 }
 
 /* Reset básico de margens e configuração da fonte */
@@ -24,31 +27,32 @@ body {
     color: var(--title-color);
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza tudo horizontalmente */
+    align-items: center;
+    /* Centraliza tudo horizontalmente */
     min-height: 100vh;
     /*padding-top: 50px;*/
 }
 
-/* header {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 100%;
-} */
-
 header {
-    width: 100%; /* Faz o cabeçalho ocupar 100% da largura da tela */
+    width: 100%;
+    /* Faz o cabeçalho ocupar 100% da largura da tela */
     display: flex;
-    justify-content: center; 
-    align-items: center; /* Centraliza verticalmente o conteúdo */
-    padding: 15px 0; /* Dá um respiro em cima e embaixo do texto */
-    border-bottom: 1px solid var(--border-color); /* Cria aquela linha fina e elegante separando o topo do jogo */
-    margin-bottom: 50px; /* Empurra o tabuleiro do jogo lá para baixo */
+    justify-content: center;
+    align-items: center;
+    /* Centraliza verticalmente o conteúdo */
+    padding: 15px 0;
+    /* Dá um respiro em cima e embaixo do texto */
+    border-bottom: 1px solid var(--border-color);
+    /* Cria aquela linha fina e elegante separando o topo do jogo */
+    margin-bottom: 50px;
+    /* Empurra o tabuleiro do jogo lá para baixo */
 }
 
 header h1 {
     font-size: 2rem;
     font-weight: bold;
-    letter-spacing: 4px; /* Dá um espaço estiloso entre as letras */
+    letter-spacing: 4px;
+    /* Dá um espaço estiloso entre as letras */
     margin: 0;
 }
 
@@ -57,13 +61,15 @@ header h1 {
     padding-top: 50px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Espaço entre as linhas de palavras */
+    gap: 10px;
+    /* Espaço entre as linhas de palavras */
 }
 
 /* Estilo para as palavras fixas (Inicial e Final) */
 .word-block {
     display: flex;
-    gap: 8px; /* Espaço entre as letras */
+    gap: 8px;
+    /* Espaço entre as letras */
     justify-content: center;
 }
 
@@ -108,38 +114,112 @@ header h1 {
 }
 
 /*Quando der erro no input*/
-.attempt-row.error .letter-input{
-    border: 2px solid var(--border-box-error); 
+.attempt-row.error .letter-input {
+    border: 2px solid var(--border-box-error);
     background-color: var(--background-color-error);
 }
 
-@keyframes error-shake{
-    0%  { transform: translateX(0); }
-    20% { transform: translateX(-5px); }
-    40% { transform: translateX(5px); }
-    60% { transform: translateX(0); }
-    80% { transform: translateX(-5px); }
-    100%{ transform: translateX(5px); }
+@keyframes error-shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-5px);
+    }
+
+    40% {
+        transform: translateX(5px);
+    }
+
+    60% {
+        transform: translateX(0);
+    }
+
+    80% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(5px);
+    }
 }
 
-.attempt-row.error-shake{
+.attempt-row.error-shake {
     animation: error-shake 0.3s;
 }
 
 /*Para vitória*/
-.attempt-row.victory .letter-input{
+.attempt-row.victory .letter-input {
     background-color: var(--background-color-victory);
 }
 
-@keyframes victory-shake{
-    0%  { transform: translateY(0); }
-    20% { transform: translateY(-10px); }
-    40% { transform: translateY(10px); }
-    60% { transform: translateY(0); }
-    80% { transform: translateY(-10px); }
-    100%{ transform: translateY(10px); }
+@keyframes victory-shake {
+    0% {
+        transform: translateY(0);
+    }
+
+    20% {
+        transform: translateY(-10px);
+    }
+
+    40% {
+        transform: translateY(10px);
+    }
+
+    60% {
+        transform: translateY(0);
+    }
+
+    80% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(10px);
+    }
 }
 
-.letter-input.victory-shake{
+.attempt-row.hint-row .letter-input {
+    background-color: #3498db;
+    border-color: #2980b9;
+    color: var(--text-color);
+}
+
+.letter-input.victory-shake {
     animation: victory-shake 0.6s;
+}
+
+/* Container dos botões */
+#game-controls {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.action-btn {
+    background-color: var(--bg-action-btn);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.action-btn:hover {
+    background-color: #2980b9;
+}
+
+.action-btn:active {
+    transform: scale(0.95);
+}
+
+.action-btn:disabled {
+    background-color: #7f8c8d;
+    cursor: not-allowed;
+    transform: none;
 }
